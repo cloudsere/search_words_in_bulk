@@ -135,7 +135,7 @@ def get_youdao_query_result(url):
         result["phonetic"] = phonetic
         
         chinese_definition_object = soup.find(attrs={'class':'trans-container'})
-        chinese_definition = chinese_definition.find('li').text if chinese_definition is not None else ''
+        chinese_definition = chinese_definition_object.find('li').text if chinese_definition_object is not None else ''
         result["chinese_definition"] = chinese_definition
         return result
     except HTTPError as e:
