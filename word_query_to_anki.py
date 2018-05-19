@@ -111,10 +111,12 @@ def get_query_result(url):
         soup = BeautifulSoup(response,'lxml')
         
         # find the first element with class 'ind', which is the definition of the word
-        definition = soup.find(attrs={'class':'ind'}).text
+        definition_object = soup.find(attrs={'class':'ind'})
+        definition = definition_object.text if definition_object is not None else ''
         result["definition"] = definition
         
-        sentence = soup.find(attrs={'class':'exg'}).find('em').text
+        sentence_object = soup.find(attrs={'class':'exg'})
+        sentence = sentence_object.find('em').text if sentence_object is not None else ''
         result["sentence"] = sentence
         return result
     except HTTPError as e:
@@ -128,10 +130,12 @@ def get_youdao_query_result(url):
         response = urllib.request.urlopen(page)
         soup = BeautifulSoup(response,'lxml')
         
-        phonetic = soup.find(attrs={'class':'phonetic'}).text
+        phonetic_object = soup.find(attrs={'class':'phonetic'})
+        phonetic = phonetic_object.text if phonetic_object is not None else ''
         result["phonetic"] = phonetic
         
-        chinese_definition = soup.find(attrs={'class':'trans-container'}).find('li').text
+        chinese_definition_object = soup.find(attrs={'class':'trans-container'})
+        chinese_definition = chinese_definition.find('li').text if chinese_definition is not None else ''
         result["chinese_definition"] = chinese_definition
         return result
     except HTTPError as e:
